@@ -1,0 +1,10 @@
+{
+	"bkt_probs" : 
+            {"A " : {"known": 0.1, "learn": 0.05, "guess": 0.05, "slip": 0.02},
+             "S " : {"known": 0.1, "learn": 0.05, "guess": 0.05, "slip": 0.02},
+             "MD" : {"known": 0.1, "learn": 0.1, "guess": 0.05, "slip": 0.02},
+             "MS" : {"known": 0.1, "learn": 0.1, "guess": 0.05, "slip": 0.02},
+             "DD"  : {"known": 0.1, "learn": 0.1, "guess": 0.05, "slip": 0.02},
+             "DS"  : {"known": 0.1, "learn": 0.1, "guess": 0.05, "slip": 0.02}
+            } 
+}
