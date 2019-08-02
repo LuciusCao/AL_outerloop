@@ -19,7 +19,7 @@ import argparse, socket
 print(sys.path)
 from controllers.random import Random
 from controllers.bkt import BKT
-
+#from controllers.bkt_kcs_exponent_single import BKTKCsExponentSingle
 def str_to_class(s):
     return getattr(sys.modules[__name__], s)
 
@@ -60,7 +60,7 @@ class OuterLoopHttpRequestHandler (SimpleHTTPRequestHandler):
 
     def do_OPTIONS(self):
         self.send_response(200, "ok")
-        # self.send_header('Access-Control-Allow-Origin', '*')
+        #self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'OPTIONS, NEW_STUDENT, NEXT_PROBLEM, POST')
         self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")

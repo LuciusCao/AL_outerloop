@@ -7,7 +7,7 @@ mastery_threshold = .95 #Stop asking about a skill if estimate of mastery is > t
 max_problems = 50 #Stop asking problems if after max_problems
 
 # This is the path to AL_outerloop/ExampleJSON/bkt_config.json
-config_file = os.path.join('ExampleJSON', 'bkt_config.json') # File with the BKT probabilities
+config_file = os.path.join('ExampleJSON', 'bkt_config_exponent_single.json') # File with the BKT probabilities
 
 class BKT(OuterLoopController):
     def __init__(self):
@@ -24,20 +24,21 @@ class BKT(OuterLoopController):
         read_config_json(config_file)
 
     def new_student(self, student_id, action_space=None):
+        print("***new student***")
         super().new_student(student_id, action_space)
         # Track the steps for each problem, rewards, and feedback types.
         self.steps = []
         self.rewards = []
         self.tps = []
 
-        split = 10 # default test_set size is 10
+        '''split = 10 # default test_set size is 10
         if len(action_space) > split:      
             self.action_space = action_space[:-split]
             self.test_set = action_space[-split:]
-        else:
-            self.action_space = action_space
-            self.test_set = []
-        
+        else: '''
+        self.action_space = action_space
+        self.test_set = []
+    
         # Initialize our estimate of whether the agent knows each skill
         # each estimate is just the probability the skill is known before practice
         self.mastery_prob = {skill: bkt_probs[skill]["known"] for skill in bkt_probs}
@@ -51,11 +52,18 @@ class BKT(OuterLoopController):
         # fraction multiplication, fraction addition with different denominators,
         # and fraction addition with the same denominators)
         self.problems_by_skill = {}
-        for problem in self.action_space:
+        '''for problem in self.action_space:
             item = problem["question_file"]
             if item[item.rindex("/")+1:][:2] not in self.problems_by_skill:
                 self.problems_by_skill[item[item.rindex("/")+1:][:2]] = []
-            self.problems_by_skill[item[item.rindex("/")+1:][:2]].append(problem)
+            self.problems_by_skill[item[item.rindex("/")+1:][:2]].append(problem) '''
+        for problem in self.action_space:
+            item = problem["question_file"]
+            kcs = problem["kc_list"]
+            for kc in kcs:
+                if kc not in self.problems_by_skill:
+                     self.problems_by_skill[kc] = []
+                self.problems_by_skill[kc].append(problem)
         
     
     def update(self,step,reward,feedback_type,problem_name):
